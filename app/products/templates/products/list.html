@@ -1,0 +1,32 @@
+{% include "base.html" %}
+
+
+<section class="section-content" >
+<div class="container">
+
+<header class="section-heading mt-4">
+  <h3 class="section-title listTitle" style="font-family: 'Italiana';font-weight: 500;height: 2rem;"> <p style="position: absolute;z-index: 4;color: white;">Choose  <span style="font-weight: 800;color: black;">your look</span></p></h3>
+</header><!-- sect-heading -->
+
+
+<div class="row " style="margin-top: 4rem;">
+	{% for i in range(products|length):%}
+  <div class="col-md-3">
+    <div href="#" class="card card-product-grid" style="border-radius: 0px;">
+      <a href="#" class="img-wrap"> <img src="../../../static/images/{{title.lower()}}/{{products[i].img_url}}" class="w-100	" style="border-radius: 0px;"> </a>
+      <figcaption class="info-wrap">
+        <a href="/products/{{title.lower()}}/{{products[i]['prod_id']}}" class="title" style="font-weight: 400;">{{products[i]['name'].capitalize()}}</a>
+        
+        <div class="price mt-1" style="font-size: medium;">Rs. {{products[i]['price']}}</div> <!-- price-wrap.// -->
+      </figcaption>
+    </div>
+  </div>
+{% endfor %}
+</div> <!-- row.// -->
+
+
+</div> <!-- container .//  -->
+</section>
+
+
+
