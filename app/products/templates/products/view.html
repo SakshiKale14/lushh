@@ -14,7 +14,7 @@
 </article> <!-- gallery-wrap .end// -->
     </aside>
     <aside class="col-sm-7">
-<article class="card-body p-5 tag">
+<article class="card-body p-5 tag" style="background-color: white;border:unset">
   <h2 class="title mb-0" style="font-family: 'Italiana';position: absolute;">{{product_item['name']}}</h2>
 
 
@@ -64,7 +64,7 @@
     </div> <!-- col.// -->
   </div> <!-- row.// -->
   <hr>
-  <div href="" class="btn btn-lg text-uppercase checkoutBtns mr-3 blackBtns" > Buy now </div>
+  <div href="" class="btn btn-lg text-uppercase checkoutBtns mr-3 blackBtns" id='buyNow'> Buy now </div>
   <div href="#" class="btn btn-lg text-uppercase checkoutBtns" style="color: black;letter-spacing: 3px;font-size: small;font-weight: 300;border: 1px solid black;border-radius: 0px;" id='addToCart'> <i class="fas fa-shopping-cart" style="color:black" ></i> Add to cart </div>
 </article> <!-- card-body.// -->
     </aside> <!-- col.// -->
@@ -78,5 +78,8 @@
   document.getElementById('addToCart').addEventListener('click',function(e){
     let q=document.getElementById('quantity').value
     addNo(q)
+  })
+  document.getElementById('buyNow').addEventListener('click',function(e){
+    
   })
 </script>

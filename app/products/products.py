@@ -68,20 +68,20 @@ def viewclothing_product( product_id):
 
 	return render_template("view.html", product_item=product_item,title='Clothing')
 			
-@products_bp.route("/addProduct",methods=['POST','GET'])
-def add_product():
-	if request.method=='GET':
-		return render_template("addProd.html")
-	else:
-		option=request.form['prod_type']
-		if(option=='clothes'):
+# @products_bp.route("/addProduct",methods=['POST','GET'])
+# def add_product():
+# 	if request.method=='GET':
+# 		return render_template("addProd.html")
+# 	else:
+# 		option=request.form['prod_type']
+# 		if(option=='clothes'):
 			
-			new_prod= product_clothes(name=request.form['prod_name'],price=request.form['prod_price'],description=request.form['prod_description'])
-		elif(option=='jewellery'):
-			new_prod=prod_jwellery(name=request.form['prod_name'],price=request.form['prod_price'],description=request.form['prod_description'])
+# 			new_prod= product_clothes(name=request.form['prod_name'],price=request.form['prod_price'],description=request.form['prod_description'])
+# 		elif(option=='jewellery'):
+# 			new_prod=prod_jwellery(name=request.form['prod_name'],price=request.form['prod_price'],description=request.form['prod_description'])
 		
-		db.session.add(new_prod)
-		db.session.commit()
+# 		db.session.add(new_prod)
+# 		db.session.commit()
 
 @products_bp.route("/view")
 def view():

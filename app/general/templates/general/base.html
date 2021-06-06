@@ -98,8 +98,8 @@ $(document).ready(function() {
           </div>
           {%else%}
           <div>
-            {{session['email']}}
-            <a href="/auth/logout">Logout</a>
+            {{session['email']}} |
+            <a href="/auth/logout"  style="color: tomato;font-weight: 300;">Logout</a>
             
           </div>
             {% endif %}
