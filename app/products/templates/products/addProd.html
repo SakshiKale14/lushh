@@ -1,0 +1,58 @@
+{% include "base.html"%}
+
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+
+<!-- ============================ COMPONENT REGISTER   ================================= -->
+  <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+      <article class="card-body">
+    <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+    <form method="POST">
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Product Type</label>
+                <input type="radio" class="form-control authIps"  name="prod_name" value='clothes'>
+                <input type="radio" class="form-control authIps"  name="prod_name" value='jewellery'>
+              </div> <!-- form-group end.// -->
+
+          <div class="col form-group">
+            <label>Product Name</label>
+              <input type="text" class="form-control authIps" placeholder="" name="prod_name">
+          </div> <!-- form-group end.// -->
+          
+        </div> <!-- form-row end.// -->
+       
+        <div class="form-group">
+            <div class="col form-group">
+                <label>Price</label>
+                  <input type="number" class="form-control authIps" placeholder="" name="prod_price">
+              </div> <!-- form-group end.// -->
+              <div class="col form-group">
+                <label>Description</label>
+                  <input type="number" class="form-control authIps" placeholder="" name="prod_desc">
+              </div> <!-- form-group end.// -->
+              <div class="col form-group">
+                <label>Upload Image</label>
+                  <input type="file" class="form-control authIps" placeholder="" name="prod_img">
+              </div> <!-- form-group end.// -->
+
+          
+        </div> <!-- form-group end.// -->
+        <div class="form-group">
+            <button type="submit" class="btn blackBtns btn-block">Add Product  </button>
+        </div> <!-- form-group// -->  
+       
+        
+             
+              
+      </form>
+    </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+   
+<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+
+</section>

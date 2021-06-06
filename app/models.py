@@ -30,13 +30,18 @@ class BaseModel(db.Model):
 
 class user_details(BaseModel, db.Model):
     __tablename__ = 'user_details'
+
     id=db.Column(db.Integer, primary_key=True)
     user_id=db.Column(db.String(50),unique=True)
     fname=db.Column(db.String(50))
     lname=db.Column(db.String(50))
     
-    email=db.Column(db.String(300),unique=True)
+    user_name=db.Column(db.String(300),unique=True)
+    iv=db.Column(db.String(256))
     password=db.Column(db.String(300),unique=True)
+    e_username=db.Column(db.String(500),unique=True)
+    e_password=db.Column(db.String(500),unique=True)
+    secret_key=db.Column(db.String(500),unique=True)
     cart_item=db.Column(ARRAY(JSON))
     gender=db.Column(db.String(10))
     country=db.Column(db.String(10))
@@ -67,6 +72,9 @@ class card_details(BaseModel,db.Model):
     # user table
     user_id=db.Column(db.String(50),db.ForeignKey('user_details.user_id'))
     card_no=db.Column(db.String(300),unique=True)
+    secret_key=db.Column(db.String(500))
+    iv=db.Column(db.String(256))
+    e_cardNo=db.Column(db.String(500))
     card_name=db.Column(db.String(300),unique=True)
     cvv=db.Column(db.String(200),unique=True)
     expiry_date=db.Column(db.String(10))

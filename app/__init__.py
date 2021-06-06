@@ -6,13 +6,12 @@ from app.auth.auth import auth_bp
 from app.cart.cart import cart_bp
 from flask_cors import CORS
 from app.models import db
-from app.aes import key
+
 
 app = Flask(__name__)
 cors = CORS(app)
 app.secret_key = "hhdhdhdhdh7788768"
-print('======')
-print(key)
+
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/bazar'
