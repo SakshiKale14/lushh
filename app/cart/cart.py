@@ -8,16 +8,21 @@ from app.models import user_details,db
 
 row2dict = lambda r: {c.name: str(getattr(r, c.name)) for c in r.__table__.columns}
 cart_bp = Blueprint("cart_bp", __name__, template_folder = "templates")
-no='0'
 @cart_bp.before_request
 def before_request():
-    
-    if 'email' in session:
-        user=user_details.query.filter_by(user_name=session['email']).first()
-        if user.cart_item:
-            no=str(len(user.cart_item))
-        else:
-            no=0
+	
+	
+	if 'email' in session:
+		user=user_details.query.filter_by(user_name=session['email']).first()
+		global no
+		if user.cart_item:
+			
+			no=str(len(user.cart_item))
+			print('-------')
+			print(no)
+		else:
+			
+			no='0'
 
 @cart_bp.route("/view")
 def main():

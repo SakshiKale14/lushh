@@ -8,13 +8,20 @@ general_bp = Blueprint("general_bp", __name__ , template_folder="templates/gener
 no='0'
 @general_bp.before_request
 def before_request():
-    
-    if 'email' in session:
-        user=user_details.query.filter_by(user_name=session['email']).first()
-        if user.cart_item:
-            no=str(len(user.cart_item))
-        else:
-            no=0
+	
+	
+	if 'email' in session:
+		user=user_details.query.filter_by(user_name=session['email']).first()
+		global no
+		if user.cart_item:
+			
+			no=str(len(user.cart_item))
+			print('-------')
+			print(no)
+		else:
+			
+			no='0'
+            
 @general_bp.route("/")
 def home():
    
