@@ -1,0 +1,77 @@
+{% include "base.html"%}
+<link rel="stylesheet" href="/static/css/cart.css">
+<div class="buyContainer">
+   
+<div style="background-color: #F1F1F1;">
+<div class="card">
+    <div class="img"><img src="" alt=""></div>
+    <div class="desc"></div>
+</div>
+<div class="paymentWrapper">
+    <div class="payment_details">
+        <div class="cardDetails">
+            <p class="formHead"><i class='bx bx-credit-card-front'></i> Your card details</p>
+            
+            <form action="" id='cardDetailsForm'>
+                <input type="text" placeholder="Card Holder's Name" name='cardName'>
+                <input type="text" placeholder="Card No" name='cardNo'>
+                <div class="d-flex" style="width: 50%;" >
+                    <input type="number" placeholder="CVV" class='mr-4' style="width: 45%;" name='cvv'>
+                    <input type="date" placeholder="Expiry date" style="width: 50%;" name='expDate'>
+                </div>
+                
+            </form>
+        </div>
+        <div class="shippingDetails mt-3">
+            <p class="formHead"><i class='bx bxs-truck' ></i> Your shipping details</p>
+            
+            <form action="" id='shippingDetailsForm'>
+                <input type="text" placeholder="Address">
+                <input type="text" placeholder="Phone Number">
+            </form>
+        
+        </div>
+       
+    
+    </div>
+    <div style="text-align: center;margin-bottom: 1rem;">
+        <div class="btn btn-lg text-uppercase checkoutBtns blackBtns" id='pay' style="margin-right: auto;margin-left: auto;width: 10rem;"> Pay</div>
+    </div>
+
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+<script>
+    document.getElementById('pay').addEventListener('click',function(e){
+        let card_details={}
+        let shipping_details={}
+        let cardArr=$('#cardDetailsForm').serializeArray()
+        let shippingArr=$('#shippingDetailsForm').serializeArray()
+        cardArr.forEach(el=>{
+            card_details[el.name]=el.value
+        })
+        shippingArr.forEach(el=>{
+            shipping_details[el.name]=el.value
+        })
+        let resData={
+            card_details:card_details,
+            shipping_details:shipping_details
+        }
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: '/auth/buy_one',
+            data: JSON.stringify(resData),
+            dataType: "json",
+        
+        })
+   });
+        
+
+ 
+</script>

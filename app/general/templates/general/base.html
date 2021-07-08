@@ -10,6 +10,7 @@
 
 <link href="/static/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
 <script src="https://kit.fontawesome.com/c96d3752b6.js" crossorigin="anonymous"></script>
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 <!-- gogole fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100&display=swap" rel="stylesheet">
@@ -84,8 +85,10 @@ $(document).ready(function() {
   <div class="col-lg-4 col-sm-6 col-12">
     <div class="widgets-wrap float-md-right">
       <div class="widget-header  mr-3">
+        {%if 'email' in session: %}
         <a href="/cart/view" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-        <span class="badge badge-pill badge-danger notify" id="cartNo"></span>
+        <span class="badge badge-pill badge-danger notify" id="cartNo" data={{cartNo}}>{{cartNo}}</span>
+        {%endif%}
       </div>
       <div class="widget-header icontext">
         <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
@@ -137,11 +140,12 @@ $(document).ready(function() {
 </nav>
 
 </header> <!-- section-header.// -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
   
   
     let cart=document.getElementById('cartNo')
-    let cartNo=0
+    let cartNo=parseInt(document.querySelector('span#cartNo').innerText)
     cart.innerText=cartNo
     const addNo=(quantity)=>{
     console.log('add')

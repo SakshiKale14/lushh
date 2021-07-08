@@ -2,7 +2,7 @@
 
 
 
-
+<meta id='product_detail' data-pid={{product_id}} data-pname={{product_item.name|replace(" ","_")}} data-url={{title.lower()}}/{{product_item.img_url}} data-title={{title.lower()}}>
 <div style="background-color: #F1F1F1;">
 <div class="card m-5">
   <div class="row ">
@@ -48,15 +48,15 @@
           <dt style="font-weight: 400;margin-bottom: 0.5rem;">Size </dt>
           <dd>
             <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="sm">
             <span class="form-check-label">SM</span>
           </label>
           <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="md">
             <span class="form-check-label">MD</span>
           </label>
           <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="xxl">
             <span class="form-check-label">XXL</span>
           </label>
           </dd>
@@ -65,7 +65,7 @@
   </div> <!-- row.// -->
   <hr>
   <div href="" class="btn btn-lg text-uppercase checkoutBtns mr-3 blackBtns" id='buyNow'> Buy now </div>
-  <div href="#" class="btn btn-lg text-uppercase checkoutBtns" style="color: black;letter-spacing: 3px;font-size: small;font-weight: 300;border: 1px solid black;border-radius: 0px;" id='addToCart'> <i class="fas fa-shopping-cart" style="color:black" ></i> Add to cart </div>
+  <div  class="btn btn-lg text-uppercase checkoutBtns" style="color: black;letter-spacing: 3px;font-size: small;font-weight: 300;border: 1px solid black;border-radius: 0px;" id='addToCart'> <i class="fas fa-shopping-cart" style="color:black" ></i> Add to cart </div>
 </article> <!-- card-body.// -->
     </aside> <!-- col.// -->
   </div> <!-- row.// -->
@@ -74,12 +74,42 @@
 
 </div>
 </div>
+
 <script>
   document.getElementById('addToCart').addEventListener('click',function(e){
     let q=document.getElementById('quantity').value
-    addNo(q)
+    let size=document.querySelector("input[name=inlineRadioOptions]:checked").value
+    let data={}
+    data['size']=size;
+    data['quantity']=q;
+    data['prod_id']=document.querySelector('meta#product_detail').dataset.pid;
+    data['prod_name']=document.querySelector('meta#product_detail').dataset.pname;
+    data['img_url']=document.querySelector('meta#product_detail').dataset.url
+    console.log(data)
+    
+    
+    $.ajax({
+      type: "POST",
+      contentType: "application/json",
+      url: '/cart/add_to_cart',
+      data: JSON.stringify(data),
+      dataType: "json",
+      complete:function(res){
+        addNo(q)
+      }
+   });
+    
   })
   document.getElementById('buyNow').addEventListener('click',function(e){
-    
+    let data=document.querySelector('meta#product_detail').dataset
+    let q=document.getElementById('quantity').value
+    let size=document.querySelector("input[name=inlineRadioOptions]:checked").value
+    window.location=`/products/${data.title}_buy/one/${data.pid}/${q}/${size}`
+    // $.ajax({
+    //   type: "GET",
+      
+    //   url: `/products/${data.title}_buy/${data.pid}/${document.getElementById('quantity').value}/${document.querySelector("input[name=inlineRadioOptions]:checked").value}`
+      
+    // })
   })
 </script>

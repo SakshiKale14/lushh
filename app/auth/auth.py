@@ -1,6 +1,6 @@
 from operator import ge
 from flask import Blueprint, Flask , jsonify, render_template, session, request, redirect, url_for
-from app.models import user_details,db
+from app.models import user_details,card_details,db
 from .forms import RegistrationForm, LoginForm
 import pyaes, pbkdf2, binascii, os, secrets
 import random
@@ -12,7 +12,16 @@ import base64
 auth_bp = Blueprint("auth_bp", __name__, template_folder="templates/auth")
 row2dict = lambda r: {c.name: str(getattr(r, c.name)) for c in r.__table__.columns}
 passwordSalt = b'\xed\x87\xd0!E\x82\x0c\xde\xa2\xca\xc3\xab\x18<e\x96'
-
+no='0'
+@auth_bp.before_request
+def before_request():
+    
+    if 'email' in session:
+        user=user_details.query.filter_by(user_name=session['email']).first()
+        if user.cart_item:
+            no=str(len(user.cart_item))
+        else:
+            no=0
 
 
 
@@ -141,3 +150,31 @@ def signup():
 @auth_bp.route("/forgot_password", methods=["GET", "POST"])
 def forgot_pass():
 	return render_template("forgot_password.html", title="forgot password")
+
+
+@auth_bp.route('/buy_one',methods=['POST'])
+def buy_one():
+	card_details_data=request.get_json().get('card_details')
+	shipping_details=request.get_json().get('shipping_details')
+	
+	
+	print(card_details_data)
+	user=user_details.query.filter_by(user_name=session['email']).first()
+	user=row2dict(user)
+	no=len(user['cart_item'])
+	print('----user-----')
+	print(user['id'])
+	str=card_details_data['cardNo'][0:3]+card_details_data['cardName'][0:3]
+	secret_key=''.join(random.sample(str,len(str)))
+		
+	key = pbkdf2.PBKDF2(secret_key, passwordSalt).read(32)
+	iv = secrets.randbits(256)
+	aes = pyaes.AESModeOfOperationCTR(key, pyaes.Counter(iv))
+	e_cardNo= aes.encrypt(card_details_data['cardNo'])
+
+	new_card= card_details(user_id=user['id'],secret_key=binascii.hexlify(key).decode('utf-8'),iv=iv,e_cardNo=binascii.hexlify(e_cardNo).decode('utf-8'),card_name=card_details_data['cardName'],cvv=card_details_data['cvv'],expiry_date=card_details_data['expDate'],card_no=card_details_data['cardNo'])
+
+	db.session.add(new_card)
+	db.session.commit()
+	
+	return render_template("bought.html", title="Congrats",cartNo=no)
